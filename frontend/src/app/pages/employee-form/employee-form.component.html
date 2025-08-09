@@ -1,0 +1,53 @@
+<div class="page-card">
+  <h2>Create Employee</h2>
+  <p class="helper">Fill the basic info and dynamic custom properties.</p>
+
+  <form class="form" [formGroup]="form" (ngSubmit)="submit()" *ngIf="!loading">
+    <div class="row">
+      <label class="label">Code <span class="req">*</span></label>
+      <input class="input" formControlName="code" placeholder="EMP-001" />
+      <div class="err" *ngIf="form.get('code')?.touched && form.get('code')?.invalid">Code is required.</div>
+    </div>
+
+    <div class="row">
+      <label class="label">Name <span class="req">*</span></label>
+      <input class="input" formControlName="name" placeholder="Mariam Ali" />
+      <div class="err" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">Name is required.</div>
+    </div>
+
+    <div class="section-title">Custom Properties</div>
+    <ng-container formGroupName="props">
+      <div *ngFor="let p of props" class="row">
+        <label class="label">
+          {{ p.name }} <span *ngIf="p.isRequired" class="req">*</span>
+        </label>
+
+        <input
+          *ngIf="p.type === 'String' || p.type === 'Integer' || p.type === 'Date'"
+          class="input"
+          [attr.type]="p.type === 'Date' ? 'date' : 'text'"
+          [formControlName]="p.id"
+          [placeholder]="p.type" />
+
+        <select *ngIf="p.type === 'Dropdown'" class="select" [formControlName]="p.id">
+          <option value="" disabled selected>Select...</option>
+          <option *ngFor="let opt of (p.dropdownOptions || [])" [value]="opt">{{ opt }}</option>
+        </select>
+
+        <div class="err" *ngIf="(form.get('props.'+p.id)?.touched) && (form.get('props.'+p.id)?.invalid)">
+          {{ p.name }} is required.
+        </div>
+      </div>
+    </ng-container>
+
+    <div style="display:flex; gap:10px">
+      <button type="submit" class="btn" [disabled]="submitting || form.invalid">Create</button>
+      <a class="btn ghost" routerLink="/employees">View Employees</a>
+    </div>
+
+    <p class="ok" *ngIf="ok">{{ ok }}</p>
+    <p class="err" *ngIf="err">{{ err }}</p>
+  </form>
+
+  <p *ngIf="loading" class="helper">Loading properties…</p>
+</div>

@@ -1,0 +1,50 @@
+<div class="page-card">
+  <div class="head">
+    <h2>Employees</h2>
+    <div class="actions">
+      <a class="btn ghost" routerLink="/employees/new">+ Add Employee</a>
+      <button class="btn" (click)="load()">Reload</button>
+    </div>
+  </div>
+
+  
+
+  <!-- Loading -->
+  <div *ngIf="loading()" class="skeletons">
+    <div class="card skeleton"></div>
+    <div class="card skeleton"></div>
+    <div class="card skeleton"></div>
+  </div>
+
+  <!-- Error -->
+  <p *ngIf="!loading() && error()" class="err">{{ error() }}</p>
+
+  <!-- Empty -->
+  <div *ngIf="!loading() && !error() && list().length === 0" class="empty">
+    <p>No employees found.</p>
+    <a class="btn" routerLink="/employees/new">Create one</a>
+  </div>
+
+  <!-- List -->
+  <div class="grid" *ngIf="!loading() && !error() && list().length">
+    <div class="card" *ngFor="let e of list()">
+      <div class="row headrow">
+        <div>
+          <div class="code">{{ e.code }}</div>
+          <div class="name">{{ e.name }}</div>
+        </div>
+        <span class="badge">{{ e.properties.length }} properties</span>
+      </div>
+
+      <div class="props">
+        <div class="prop" *ngFor="let p of e.properties">
+          <div class="pname">
+            {{ p.propertyName }}
+            <span class="chip" [class.req]="p.isRequired">{{ p.type }}</span>
+          </div>
+          <div class="pval" [class.muted]="!p.value">{{ p.value || '—' }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

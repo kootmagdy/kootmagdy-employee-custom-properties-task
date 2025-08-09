@@ -1,0 +1,57 @@
+.form-row.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #2563eb; // لون العلامة لما تتعلم
+    cursor: pointer;
+  }
+
+  label {
+    cursor: pointer;
+    font-size: 14px;
+    color: #374151;
+  }
+}
+
+
+
+
+.form{
+  display:grid; gap:14px; max-width:560px;
+}
+.form .row{display:grid; gap:8px}
+.label{font-weight:600}
+.req{color:var(--danger); margin-inline-start:4px}
+
+.input, .select, .btn{
+  padding:12px 14px; font-size:14px; border-radius:10px; border:1px solid #e5e7eb; background:#fff;
+}
+.input:focus, .select:focus{outline:none; box-shadow:var(--ring); border-color:var(--primary)}
+.select{appearance:none}
+.checkbox{display:flex; align-items:center; gap:10px}
+
+.btn{border:none; background:var(--primary); color:#fff; font-weight:600}
+.btn:hover{background:var(--primary-600)}
+.btn.ghost{background:#eef2ff; color:#1e40af}
+.btn.danger{background:var(--danger)}
+
+.helper{color:var(--muted); font-size:12px}
+.err{color:var(--danger); font-size:12px}
+.ok{color:var(--success); font-weight:600}
+.section-title{margin-top:10px;font-weight:700}
+
+.badge{display:inline-block;background:#f1f5f9;color:#0f172a;padding:4px 8px;border-radius:999px;font-size:12px}
+.list{display:grid;gap:8px}
+
+.options{display:grid; gap:8px}
+.option-row{display:flex; gap:8px}
+.option-row .input{flex:1}
+
+@media (max-width:640px){
+  .form{max-width:100%}
+}

@@ -1,0 +1,46 @@
+<div class="page-card">
+  <h2>Create Property</h2>
+  <p class="helper">Add a custom field (String / Integer / Date / Dropdown) to be used in the employee form.</p>
+
+  <form class="form" [formGroup]="form" (ngSubmit)="submit()">
+
+    <div class="row">
+      <label class="label" for="name">Name <span class="req">*</span></label>
+      <input id="name" class="input" type="text" formControlName="name" placeholder="e.g., Department" />
+      <div class="err" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+        Name is required (max 100).
+      </div>
+    </div>
+
+    <div class="row">
+      <label class="label" for="type">Type <span class="req">*</span></label>
+      <select id="type" class="select" formControlName="type">
+        <option *ngFor="let t of types" [value]="t">{{ t }}</option>
+      </select>
+    </div>
+<div class="form-row checkbox">
+  <input id="required" type="checkbox" formControlName="isRequired" />
+  <label for="required">Required</label>
+</div>
+
+
+    <div class="row" *ngIf="form.value.type === 'Dropdown'">
+      <div class="section-title">Dropdown Options <span class="req">*</span></div>
+      <div class="options" formArrayName="dropdownOptions">
+        <div class="option-row" *ngFor="let ctrl of dropdownOptions.controls; index as i">
+          <input class="input" [formControlName]="i" placeholder="e.g., HR" />
+          <button type="button" class="btn ghost" (click)="removeOption(i)">Remove</button>
+        </div>
+      </div>
+      <button type="button" class="btn ghost" (click)="addOption()">+ Add option</button>
+    </div>
+
+    <div class="row" style="display:flex; gap:10px">
+      <button type="submit" class="btn" [disabled]="submitting || form.invalid">Create</button>
+      <button type="button" class="btn danger" (click)="form.reset({ name:'', type:'String', isRequired:false }); dropdownOptions.clear()">Reset</button>
+    </div>
+
+    <p class="ok" *ngIf="successMsg">{{ successMsg }}</p>
+    <p class="err" *ngIf="errorMsg">{{ errorMsg }}</p>
+  </form>
+</div>
